@@ -32,6 +32,7 @@ module.exports = function (objectRepository) {
             newItem = new ItemModel()
             newItem.code = req.query.code
             newItem.name = req.query.name
+            //newItem.category = req.query.category
             newItem.quantity = req.query.quantity
 
             newItem.save(err => {
@@ -41,16 +42,6 @@ module.exports = function (objectRepository) {
                     res.status(500).json(err)
                 }
             })
-
-            ItemModel.updateOne({ code: req.query.code }, { $inc: { quantity: req.query.quantity }}, (err, item) => {
-    
-                if (!err) {
-                    res.status(200).send()
-                } else {
-                    res.status(500).json(err)
-                }
-
-            });
         }
         
     };
