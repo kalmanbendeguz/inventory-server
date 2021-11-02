@@ -12,12 +12,22 @@ module.exports = function (objectRepository) {
                 ItemModel.find({}, (err, items) => {
                     if (items) { 
 
-                        res.locals.items = items.map(item => {
-                            return {
-                                'name': item.name,
-                                'quantity': item.quantity
-                            }
-                        })
+                        if(typeof req.query.zero_count !== "undefined" && req.query.zero_count === "n"){
+                            res.locals.items = items.filter(item => item.quantity !== 0).map(item => {
+                                return {
+                                    'name': item.name,
+                                    'category': item.category,
+                                    'quantity': item.quantity
+                                }
+                        })} else {
+                            res.locals.items = items.map(item => {
+                                return {
+                                    'name': item.name,
+                                    'category': item.category,
+                                    'quantity': item.quantity
+                                }
+                            })
+                        }
                         resolve()
                     }
                     else {

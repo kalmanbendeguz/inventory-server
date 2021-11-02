@@ -6,9 +6,9 @@ module.exports = function (objectRepository) {
 
         const checkPositiveQuantityPromise = new Promise((resolve, reject) => {
 
-            ItemModel.findOne({ code: req.query.code }, (err, item) => {
+            ItemModel.findOne({ code: req.body.code }, (err, item) => {
     
-                if (item.quantity >= req.query.quantity) {
+                if (item.quantity >= req.body.quantity) {
                     resolve()
                 } else {
                     reject()
@@ -20,7 +20,7 @@ module.exports = function (objectRepository) {
 
         function takeOutItemFromDB(){
 
-            ItemModel.updateOne({ code: req.query.code }, { $inc: { quantity: (-1) * req.query.quantity }}, (err, item) => {
+            ItemModel.updateOne({ code: req.body.code }, { $inc: { quantity: (-1) * req.body.quantity }}, (err, item) => {
 
                 if (!err) {
                     res.status(200).send()
@@ -38,7 +38,7 @@ module.exports = function (objectRepository) {
         }).
         catch(() => {
             console.log("Attempt to update to negative quantity!")
-            res.status(500).send()
+            res.status(500).send("Attempt to update to negative quantity!")
         })
         
     };

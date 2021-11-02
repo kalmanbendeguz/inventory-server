@@ -30,9 +30,10 @@ module.exports = function (objectRepository) {
 
         function insertNewItem(){
             newItem = new ItemModel()
+            
             newItem.code = req.query.code
             newItem.name = req.query.name
-            //newItem.category = req.query.category
+            newItem.category = req.query.category
             newItem.quantity = req.query.quantity
 
             newItem.save(err => {

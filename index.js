@@ -18,6 +18,7 @@ app.set('views', path.join(__dirname, '/views/'))
 app.set('routes', path.join(__dirname, '/routes/'))
 
 require(app.get('routes') + 'item')(app)
+require(app.get('routes') + 'category')(app)
 
 const port = 3000
 app.listen(port, () => {
