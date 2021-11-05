@@ -14,17 +14,21 @@ module.exports = function(app) {
     const takeOutItemMW = require(app.get('middlewares') + 'takeOutItemMW')
     const renameItemMW = require(app.get('middlewares') + 'renameItemMW')
     const getItemFromBodyMW = require(app.get('middlewares') + 'getItemFromBodyMW')
+    const saveImageMW = require(app.get('middlewares') + 'saveImageMW')
+    const getImageMW = require(app.get('middlewares') + 'getImageMW')
 
 
     const ItemModel = require(app.get('models') + 'item')
     const CategoryModel = require(app.get('models') + 'category')
     const ChangeModel = require(app.get('models') + 'change')
+    const ImageModel = require(app.get('models') + 'image')
 
 
     const objectRepository = {
 		ItemModel: ItemModel,
         CategoryModel: CategoryModel,
-        ChangeModel: ChangeModel
+        ChangeModel: ChangeModel,
+        ImageModel: ImageModel
 	};
 
     // GET
@@ -41,6 +45,11 @@ module.exports = function(app) {
         getAllSubcategoriesOfCategoryMW(objectRepository),
         getAllItemsOfCategoriesMW(objectRepository)
     )
+
+    app.get('/item/image',
+        getImageMW(objectRepository)
+    )
+
 
     // POST
 
@@ -74,5 +83,8 @@ module.exports = function(app) {
         saveItemMW(objectRepository)
     )
 
+    app.post('/item/upload_image',
+        saveImageMW(objectRepository)
+    )
     
 }
