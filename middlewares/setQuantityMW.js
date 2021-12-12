@@ -6,9 +6,13 @@ module.exports = function (objectRepository) {
         
         req.body = JSON.parse(Object.keys(req.body)[0])
 
-        function renameItem(){
-            ItemModel.updateOne({ code: req.body.code }, { name: req.body.new_name }, (err, item) => {
-
+        function setQuantity(){
+            ItemModel.updateOne({ code: req.body.code }, { quantity: req.body.new_quantity }, (err, item) => {
+                if( req.body.new_quantity < 0){
+                    console.log("Attempt to update to negative quantity")
+                    res.status(200).send("Attempt to update to negative quantity")
+                    return
+                }
                 if (!err && item) {
                     res.status(200).send()
                 } else {
@@ -18,7 +22,7 @@ module.exports = function (objectRepository) {
             });
         }
 
-        renameItem()
+        setQuantity()
 
     };
 

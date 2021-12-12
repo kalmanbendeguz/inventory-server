@@ -7,7 +7,7 @@ module.exports = function(app) {
     const CategoryModel = require(app.get('models') + 'category')
 
     const objectRepository = {
-		CategoryModel: CategoryModel,
+		CategoryModel: CategoryModel
 	};
 
     // POST

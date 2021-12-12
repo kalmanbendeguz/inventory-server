@@ -13,7 +13,9 @@ module.exports = function(app) {
     const insertExistingItemMW = require(app.get('middlewares') + 'insertExistingItemMW')
     const takeOutItemMW = require(app.get('middlewares') + 'takeOutItemMW')
     const renameItemMW = require(app.get('middlewares') + 'renameItemMW')
+    const setQuantityMW = require(app.get('middlewares') + 'setQuantityMW')
     const getItemFromBodyMW = require(app.get('middlewares') + 'getItemFromBodyMW')
+    const emptyAllItemsMW = require(app.get('middlewares') + 'emptyAllItemsMW')
 
     const ItemModel = require(app.get('models') + 'item')
     const CategoryModel = require(app.get('models') + 'category')
@@ -22,7 +24,7 @@ module.exports = function(app) {
     const objectRepository = {
 		ItemModel: ItemModel,
         CategoryModel: CategoryModel,
-        ChangeModel: ChangeModel,
+        ChangeModel: ChangeModel
 	};
 
     // GET
@@ -33,6 +35,10 @@ module.exports = function(app) {
 
     app.get('/item/get_all', 
         getAllItemsMW(objectRepository)
+    )
+
+    app.get('/item/empty_all', 
+        emptyAllItemsMW(objectRepository)
     )
     
     app.get('/item/get_all_of_subcategory',
@@ -61,6 +67,10 @@ module.exports = function(app) {
 
     app.post('/item/rename',
         renameItemMW(objectRepository)
+    )
+
+    app.post('/item/set_quantity',
+        setQuantityMW(objectRepository)
     )
 
     app.post('/item/change_category',

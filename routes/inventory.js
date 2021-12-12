@@ -1,11 +1,10 @@
 module.exports = function(app) {
 
-    const getStatsMW = require(app.get('middlewares') + 'getStatsMW')
+    const resetInventoryMW = require(app.get('middlewares') + 'resetInventoryMW')
 
-    const CategoryModel = require(app.get('models') + 'category')
     const ItemModel = require(app.get('models') + 'item')
+    const CategoryModel = require(app.get('models') + 'category')
     const ChangeModel = require(app.get('models') + 'change')
-
 
     const objectRepository = {
 		ItemModel: ItemModel,
@@ -15,8 +14,9 @@ module.exports = function(app) {
 
     // GET
 
-    app.get('/stats', 
-        getStatsMW(objectRepository)
+    app.get('/inventory/reset_inventory', 
+        resetInventoryMW(objectRepository)
     )
+    
     
 }
