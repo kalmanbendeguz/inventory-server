@@ -8,18 +8,14 @@ module.exports = function (objectRepository) {
         
         if(typeof req.query.parent_category !== "undefined") {
             CategoryModel.findOne({ _id: req.query.parent_category }, (err, parentCategory) => {
-
                 if(err || !parentCategory) {
                     res.status(500).send(err)
                 }
                 if (parentCategory) {
-                    // subcategories array definiálása
+                    
                     res.locals.subCategories = []
-
-                    // promise array definiálása
                     let getSubCategoriesPromises = []
 
-                    // ciklusban feltöltés
                     for(let i=0; i < parentCategory.subcategories.length; ++i){
 
                         let getSubCategoriesPromise = new Promise((resolve,reject) => {
@@ -37,8 +33,6 @@ module.exports = function (objectRepository) {
                         getSubCategoriesPromises.push(getSubCategoriesPromise)
                     }
 
-                    // then send
-                    // catch send err
                     Promise.all(getSubCategoriesPromises)
                     .then(() => {
                         res.status(200).json(res.locals.subCategories)
@@ -50,6 +44,7 @@ module.exports = function (objectRepository) {
     
             });
         } else {
+
             CategoryModel.find({parent_category: null }, (err, categories) => {
                 if(err) {
                     res.status(500).send(err)

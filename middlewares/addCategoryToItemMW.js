@@ -1,7 +1,5 @@
 module.exports = function (objectRepository) {
 
-    const ItemModel = objectRepository['ItemModel']
-
     return function (req, res, next) {
         
         if(res.locals.categories.length !== 0){

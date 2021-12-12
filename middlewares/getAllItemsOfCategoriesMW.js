@@ -29,6 +29,7 @@ module.exports = function (objectRepository) {
             res.locals.items = res.locals.items.filter(item => item.quantity !== 0).map(item => {
                 return {
                     'name': item.name,
+                    'code': item.code,
                     'quantity': item.quantity
                 }
         })

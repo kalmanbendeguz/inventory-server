@@ -9,7 +9,10 @@ module.exports = function (objectRepository) {
         ImageModel.findOne({ item_code: req.query.item_code }, (err, image) => {
 
             if (image) {
-                res.status(200).json(image)
+                let almostBase64 = Buffer.from(image.data, 'binary').toString('utf8');
+                let response = {}
+                response.image = almostBase64
+                res.status(200).json(response)
             } else {
                 if(err){
                     console.log(err)

@@ -6,6 +6,8 @@ module.exports = function (objectRepository) {
 
     return function (req, res, next) {
         
+        req.body = JSON.parse(Object.keys(req.body)[0])
+
         function renameItem(){
             ItemModel.updateOne({ code: req.body.code }, { name: req.body.new_name }, (err, item) => {
 

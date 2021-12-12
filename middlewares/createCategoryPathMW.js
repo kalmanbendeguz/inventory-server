@@ -11,13 +11,12 @@ module.exports = function (objectRepository) {
             for(let i = 0; i < req.body.category.length; ++i){
                 let currentCategory
                 if(parentCategory !== null){
-                    currentCategory = categories.find(cat => (cat.name === req.body.category[i] && cat.parent_category.equals(parentCategory._id)))
+                    currentCategory = categories.find(cat => (cat.name === req.body.category[i] && cat.parent_cateogory && cat.parent_category.equals(parentCategory._id)))
                 } else {
                     currentCategory = categories.find(cat => (cat.name === req.body.category[i] && cat.parent_category === null))
                 }
                 
                 if(typeof currentCategory === "undefined"){
-                    console.log("UJAT CSINALOK")
                     currentCategory = new CategoryModel()
                     currentCategory.parent_category = parentCategory
                     currentCategory.name = req.body.category[i]

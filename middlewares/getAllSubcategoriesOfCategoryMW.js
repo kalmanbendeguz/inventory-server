@@ -5,14 +5,14 @@ module.exports = function (objectRepository) {
 
     return function (req, res, next) {
         res.locals.categories = []
+
         CategoryModel.find({}, (err, categories) => {
             res.locals.allCategories = categories
             res.locals.categories.push(categories.find(cat => cat._id.equals(req.query.category_id)))
             let topCategory = categories.find(cat => cat._id.equals(req.query.category_id))
             
             findAllSubcategories(topCategory)
-            const util = require('util')
-            console.log(util.inspect(res.locals.categories, false, null, true /* enable colors */))
+            
             return next()
         });
 

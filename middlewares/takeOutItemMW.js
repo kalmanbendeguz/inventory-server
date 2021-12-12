@@ -6,6 +6,7 @@ module.exports = function (objectRepository) {
 
     return function (req, res, next) {
 
+        req.body = JSON.parse(Object.keys(req.body)[0])
         const checkPositiveQuantityPromise = new Promise((resolve, reject) => {
 
             ItemModel.findOne({ code: req.body.code }, (err, item) => {
@@ -25,7 +26,6 @@ module.exports = function (objectRepository) {
             ItemModel.updateOne({ code: req.body.code }, { $inc: { quantity: (-1) * req.body.quantity }}, (err, item) => {
 
                 if (!err) {
-
                     updateChanges()
                     res.status(200).send()
                 } else {

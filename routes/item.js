@@ -14,21 +14,15 @@ module.exports = function(app) {
     const takeOutItemMW = require(app.get('middlewares') + 'takeOutItemMW')
     const renameItemMW = require(app.get('middlewares') + 'renameItemMW')
     const getItemFromBodyMW = require(app.get('middlewares') + 'getItemFromBodyMW')
-    const saveImageMW = require(app.get('middlewares') + 'saveImageMW')
-    const getImageMW = require(app.get('middlewares') + 'getImageMW')
-
 
     const ItemModel = require(app.get('models') + 'item')
     const CategoryModel = require(app.get('models') + 'category')
     const ChangeModel = require(app.get('models') + 'change')
-    const ImageModel = require(app.get('models') + 'image')
-
 
     const objectRepository = {
 		ItemModel: ItemModel,
         CategoryModel: CategoryModel,
         ChangeModel: ChangeModel,
-        ImageModel: ImageModel
 	};
 
     // GET
@@ -46,11 +40,6 @@ module.exports = function(app) {
         getAllItemsOfCategoriesMW(objectRepository)
     )
 
-    app.get('/item/image',
-        getImageMW(objectRepository)
-    )
-
-
     // POST
 
     app.post('/item/insert_new',
@@ -59,7 +48,7 @@ module.exports = function(app) {
         addCategoryToItemMW(objectRepository),
         addItemToCategoryMW(objectRepository),
         saveCategoriesMW(objectRepository),
-        saveItemMW(objectRepository)
+        saveItemMW(objectRepository),
     )
 
     app.post('/item/insert_existing',
@@ -81,10 +70,6 @@ module.exports = function(app) {
         addItemToCategoryMW(objectRepository),
         saveCategoriesMW(objectRepository),
         saveItemMW(objectRepository)
-    )
-
-    app.post('/item/upload_image',
-        saveImageMW(objectRepository)
     )
     
 }

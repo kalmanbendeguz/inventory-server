@@ -47,7 +47,7 @@ module.exports = function (objectRepository) {
 
                 ChangeModel.find({}, (err, changes) => {
                     if (changes) {
-                        // kell-e rendezni, vagy úgy kapjuk?
+
                         res.locals.changes = changes
                         resolve()
                     }

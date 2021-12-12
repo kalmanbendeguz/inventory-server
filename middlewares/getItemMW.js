@@ -1,8 +1,8 @@
 
-
 module.exports = function (objectRepository) {
 
     const ItemModel = objectRepository['ItemModel']
+    const CategoryModel = objectRepository['CategoryModel']
 
     return function (req, res, next) {
         
@@ -12,8 +12,23 @@ module.exports = function (objectRepository) {
                 ItemModel.findOne({ code: req.query.code }, (err, item) => {
     
                     if (item) {
-                        res.locals.item = item
-                        resolve()
+                        CategoryModel.find({}, (err, categories) => {
+                            if (categories) { 
+
+                                let categoryArray = getCategoryArray(item, categories).reverse()
+
+                                res.locals.item = {
+                                    'code': item.code,
+                                    'name': item.name,
+                                    'category': item.category,
+                                    'quantity': item.quantity,
+                                    'categoryStringArray': categoryArray,
+                                    'lastChanged': item.updatedAt
+                                }
+                                   
+                                resolve()
+                            }
+                        })
                     } else {
                         reject()
                     }
@@ -33,8 +48,23 @@ module.exports = function (objectRepository) {
 
         getItemFromDB()
 
-    };
+        function getCategoryArray(item, categories){
+            let categoryStringArray = []
+            
+            let currentCategory
+            let currentCategoryIndex = categories.findIndex(x => x._id.equals(item.category))
+
+            while(currentCategoryIndex !== -1){
+                currentCategory = categories[currentCategoryIndex]
+                categoryStringArray.push(currentCategory.name)    
+                currentCategoryIndex = categories.findIndex(x => x._id.equals(currentCategory.parent_category))
+            }
+            
+            return categoryStringArray
+        }
+
+    }
+};
 
     
-};
 

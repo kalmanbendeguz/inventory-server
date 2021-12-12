@@ -6,11 +6,12 @@ module.exports = function (objectRepository) {
 
     return function (req, res, next) {
         
+        req.body = JSON.parse(Object.keys(req.body)[0])
+
         ItemModel.updateOne({ code: req.body.code }, { $inc: { quantity: req.body.quantity }}, (err, item) => {
 
             if (!err) {
                 updateChanges()
-                res.status(200).send()
             } else {
                 res.status(500).json(err)
             }
