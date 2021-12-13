@@ -20,6 +20,7 @@ app.set('routes', path.join(__dirname, '/routes/'))
 require(app.get('routes') + 'item')(app)
 require(app.get('routes') + 'category')(app)
 require(app.get('routes') + 'stats')(app)
+require(app.get('routes') + 'inventory')(app)
 
 const port = 3000
 app.listen(port, () => {
