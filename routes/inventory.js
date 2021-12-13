@@ -8,12 +8,14 @@ module.exports = function(app) {
     const CategoryModel = require(app.get('models') + 'category')
     const ChangeModel = require(app.get('models') + 'change')
     const InventoryModel = require(app.get('models') + 'inventory')
+    const ImageModel = require(app.get('models') + 'image')
 
     const objectRepository = {
 		ItemModel: ItemModel,
         CategoryModel: CategoryModel,
         ChangeModel: ChangeModel,
-        InventoryModel: InventoryModel
+        InventoryModel: InventoryModel,
+        ImageModel: ImageModel
 	};
 
     // GET

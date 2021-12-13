@@ -19,7 +19,13 @@ module.exports = function (objectRepository) {
                                 if(err2){
                                     res.status(500).send("{}")
                                 } else {
-                                    res.status(200).send("{}")
+                                    ImageModel.deleteMany({}, (err3, result3) => {
+                                        if(err3){
+                                            res.status(500).send("{}")
+                                        } else {
+                                            res.status(200).send("{}")
+                                        }
+                                    })
                                 }
                             })
                         }
